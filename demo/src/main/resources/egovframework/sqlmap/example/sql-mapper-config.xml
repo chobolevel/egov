@@ -2,6 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	<!-- MyBatis에서 자주 쓰는 자바 클래스들에 대해 별칭을 지정하는 영역 -->
+	<!-- MyBatis에서 parameterType, resultType에서 사용 가능 -->
+	<!-- 별칭만 적고 경로를 적지 않아도 되기 때문에 가독성 향상에 도움 -->
     <typeAliases>
 		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
 		<typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
