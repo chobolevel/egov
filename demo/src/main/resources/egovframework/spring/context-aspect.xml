@@ -21,6 +21,7 @@
 		</property>
 	</bean>
 
+	<!-- 패턴과 일치하는 예외 처리할 exception handler 매핑 -->
 	<bean id="defaultExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
@@ -37,6 +38,7 @@
 		</property>
 	</bean>
 
+	<!-- 패턴과 일치하는 예외 처리할 exception handler 매핑 -->
 	<bean id="otherExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
@@ -53,6 +55,7 @@
 		</property>
 	</bean>
 
+	<!-- ExceptionHandler interface 구현체 빈 등록 -->
 	<bean id="egovHandler" class="egovframework.example.cmmn.EgovSampleExcepHndlr" />
 	<bean id="otherHandler" class="egovframework.example.cmmn.EgovSampleOthersExcepHndlr" />	
 	
