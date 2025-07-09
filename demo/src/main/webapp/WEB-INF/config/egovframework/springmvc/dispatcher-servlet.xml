@@ -7,18 +7,24 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
+	<!-- egovframework 패키지 내에서 @Controller 어노테이션이 붙은 클래스만 빈으로 등록 -->
+	<!-- MVC 컨트롤러만 별도로 관리하기 위한 스캔 분리 -->
     <context:component-scan base-package="egovframework">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
 
+	<!-- @RequestMaping 기반 컨트롤러 메서드를 호출하는 역할 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="webBindingInitializer">
             <bean class="egovframework.example.cmmn.web.EgovBindingInitializer"/>
         </property>
     </bean>
+    
+    <!-- URL과 컨트롤러 메서드를 매핑 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+    	<!-- 인터셉터 등록(매핑 확인 시점에 가로채서 동작) -->
         <property name="interceptors">
             <list>
                 <ref bean="localeChangeInterceptor" />
@@ -26,12 +32,19 @@
         </property>
     </bean>
     
+    <!-- 사용자의 세션을 통해 locale(언어/지역) 관리 -->
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+    
     <!-- 쿠키를 이용한 Locale 이용시 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> -->
+    
+    <!-- 파라미터 값에 따라 locale 변경 가능(에: ?language=en) -->
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="language" />
     </bean>
 
+	<!-- 특정 예외 클래스 별로 보여줄 JSP 뷰 지정 -->
+	<!-- 예외 발생 시 자동으로 해당 뷰로 포워딩 -->
+	<!-- default = cmmn/egovError -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="cmmn/egovError"/>
         <property name="exceptionMappings">
@@ -44,6 +57,8 @@
         </property>
     </bean>
 
+	<!-- JSP 뷰 경로 지정(예: return "sample/list" -> /WEB-INF/jsp/egovframework/example/sample.list.jsp) -->
+	<!-- JSTL 뷰 클래스를 사용해 JSTL 태그 지원 -->
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
 	    p:viewClass="org.springframework.web.servlet.view.JstlView"
 	    p:prefix="/WEB-INF/jsp/egovframework/example/" p:suffix=".jsp"/>
@@ -60,5 +75,7 @@
     </bean>
 	<!-- /For Pagination Tag -->
 
+	<!-- 단순 뷰 컨트롤러 매핑 -->
+	<!-- 즉, 컨트롤러 없이 path로 요청 시 해당 뷰를 보여줌 -->
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
 </beans>
