@@ -6,18 +6,27 @@
     	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
     	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
+	<!-- AOP 기반 트랜잭션 처리를 위한 설정 -->
+	<!-- 어노테이션 방식에 비해 레거시 코드와 호환이 가능하고 세밀한 제어가 가능하다는 점이 있음 -->
+	
+	<!-- DB 트랜잭션 관리를 담당하는 빈 -->
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- dataSource 주입받아 해당 데이터소스를 대상으로 트랜잭션을 제어 -->
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
+	<!-- 트랜잭션 어드바이스 정의 -->
 	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- 모든 메서드에 대해 트랜잭션 적용 -->
+		<!-- Exception 발생 시 롤백 처리하도록 설정 -->
 		<tx:attributes>
 			<tx:method name="*" rollback-for="Exception"/>
 		</tx:attributes>
 	</tx:advice>
 
+	<!-- AOP 이용한 트랜잭션 적용 대상 지정 -->
 	<aop:config>
-		<aop:pointcut id="requiredTx" expression="execution(* egovframework.example.sample..impl.*Impl.*(..))"/>
+		<aop:pointcut id="requiredTx" expression="execution(* egovframework.example.sample.service.impl.*Impl.*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx" />
 	</aop:config>
 

@@ -6,8 +6,10 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- DB 연결 정보  -->
 		<property name="dataSource" ref="dataSource" />
+		
 		<!-- MyBatis 전역 설정 파일 경로 -->
 		<property name="configLocation" value="classpath:/egovframework/sqlmap/example/sql-mapper-config.xml" />
+		
 		<!-- SQL 매퍼 xml 파일 위치(SQL 쿼리 정의된 XML 파일들 위치) -->
 		<property name="mapperLocations" value="classpath:/egovframework/sqlmap/example/mappers/*.xml" />
 	</bean>
@@ -15,7 +17,7 @@
 	
 	<!-- MyBatis Mapper 인터페이스를 자동으로 스캔하여 스프링 빈으로 등록하는 설정 -->
  	<bean class="egovframework.rte.psl.dataaccess.mapper.MapperConfigurer">
-		<property name="basePackage" value="egovframework.example.sample.service.impl" />
+		<property name="basePackage" value="egovframework.example.sample.mapper" />
 	</bean>
     
 </beans>

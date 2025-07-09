@@ -4,23 +4,31 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+	<!-- egevframework 하위 패키지에 있는 빈을 스캔해서 등록 -->
+	<!-- 단, @Controller 어노테이션이 붙은 클래스는 제외(dispatcher-servlet.xml에서 따로 스캔을 하므로 중복 방지 차원) -->
     <context:component-scan base-package="egovframework">
        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
+	<!-- 국제화 및 메세지 처리 설정 -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>classpath:/egovframework/message/message-common</value>
+				<!-- ID 생성 관련 메시지 -->
 				<value>classpath:/egovframework/rte/fdl/idgnr/messages/idgnr</value>
+				<!-- 환경 설정 메시지 -->
 				<value>classpath:/egovframework/rte/fdl/property/messages/properties</value>
 			</list>
 		</property>
+		<!-- 파일 변경 감지 주기(개발 단계에서는 낮게 운영 단계에서는 높게 설정) -->
 		<property name="cacheSeconds">
 			<value>60</value>
 		</property>
 	</bean>
 	
+	<!-- 공통 로직의 호출 추적을 위한 기능 -->
+	<!-- 서비스 메서드 호출, 실행 시간, 파라미터 등의 정보를 로그 등으록 남기기 위한 진입점 역할 -->
 	<bean id="leaveaTrace" class="egovframework.rte.fdl.cmmn.trace.LeaveaTrace">
 		<property name="traceHandlerServices">
 			<list>
@@ -29,6 +37,7 @@
 		</property>
 	</bean>
 
+	<!-- 실제 트레이스 추적 조건과 핸들러 등록 -->
 	<bean id="traceHandlerService" class="egovframework.rte.fdl.cmmn.trace.manager.DefaultTraceHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater" />
@@ -45,7 +54,9 @@
 		</property>
 	</bean>
 	
+	<!-- 경로 매칭 도구(Ant 스타일 경로 매칭) -->
 	<bean id="antPathMater" class="org.springframework.util.AntPathMatcher" />
+	<!-- 트레이스 핸들러 구현체 -->
 	<bean id="defaultTraceHandler" class="egovframework.rte.fdl.cmmn.trace.handler.DefaultTraceHandler" />
 	 
 </beans>

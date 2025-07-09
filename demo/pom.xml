@@ -22,7 +22,7 @@
 	</properties>
 
 	<repositories>
-        <repository>
+        <repository>	
             <id>mvn2s</id>
             <url>https://repo1.maven.org/maven2/</url>
             <releases>
@@ -123,9 +123,10 @@
 			<artifactId>hsqldb</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-
-        <!-- mysql이나 oracle DB 사용시 아래 설정 추가
-        <dependency>
+		
+		<!-- JDBC SQL 로그를 출력해주는 라이브러리 -->
+		<!-- Spring Boot에서는 log4jdbc 대신 p6spy를 더 많이 사용 -->
+		<dependency>
             <groupId>com.googlecode.log4jdbc</groupId>
             <artifactId>log4jdbc</artifactId>
             <version>1.2</version>
@@ -136,19 +137,23 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        
+        <!-- Apache DBCP -->
+        <!-- Spring에서 직접 DB 연결 풀 관리하는 경우 필요하지만 최근에는 HikariCP나 Spring Boot 내장 풀을 더 많이 사용 -->
         <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.9.0</version>
         </dependency>
-
+        
+        <!-- MySQL에 접속하기 위한 JDBC 드라이버 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.31</version>
+            <version>8.0.33</version>
         </dependency>
-
+        
+        <!-- Oracle JDBC 드라이버
         <dependency>
             <groupId>ojdbc</groupId>
             <artifactId>ojdbc</artifactId>
@@ -156,7 +161,15 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc-14.jar</systemPath>
         </dependency>
-        -->
+         -->
+         
+         <!-- lombok -->
+         <dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.32</version>
+		    <scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

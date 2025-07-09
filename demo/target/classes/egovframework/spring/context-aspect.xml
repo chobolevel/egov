@@ -5,13 +5,16 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
 	<aop:config>
+		<!-- AOP pointcut -->
 		<aop:pointcut id="serviceMethod" expression="execution(* egovframework.example..impl.*Impl.*(..))" />
 
+		<!-- 예외 발생 시 exceptionTransfer 빈의 메서드를 실행하겠다는 의미 -->
 		<aop:aspect ref="exceptionTransfer">
 			<aop:after-throwing throwing="exception" pointcut-ref="serviceMethod" method="transfer" />
 		</aop:aspect>
 	</aop:config>
 	
+	<!-- 예외를 받아 예외 처리 매니저에게 위임하는 빈 -->
 	<bean id="exceptionTransfer" class="egovframework.rte.fdl.cmmn.aspect.ExceptionTransfer">
 		<property name="exceptionHandlerService">
 			<list>
@@ -21,7 +24,10 @@
 		</property>
 	</bean>
 
+	<!-- exceptionTransfer에게 위임받은 예외 중 패턴과 일치하는 예외 처리하는 빈 -->
 	<bean id="defaultExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
+		<!-- 이 부분은 patterns에서 지정한 문자열을 어떻게 해석할지 정하는 컴포넌트 -->
+		<!-- antPathMater는 Ant 스타일 패턴 매칭 제공(예: **service.impl.* = 모든 하위 패키지의 service.impl 클래스 대상) -->
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
 		</property>
@@ -30,6 +36,7 @@
 				<value>**service.impl.*</value>
 			</list>
 		</property>
+		<!-- handler 목록에 예외 위임 -->
 		<property name="handlers">
 			<list>
 				<ref bean="egovHandler" />
@@ -37,6 +44,7 @@
 		</property>
 	</bean>
 
+	<!-- exceptionTransfer에게 위임받은 예외 중 패턴과 일치하는 예외 처리하는 빈 -->
 	<bean id="otherExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
@@ -53,6 +61,7 @@
 		</property>
 	</bean>
 
+	<!-- ExceptionHandler interface 구현체 빈 등록 -->
 	<bean id="egovHandler" class="egovframework.example.cmmn.EgovSampleExcepHndlr" />
 	<bean id="otherHandler" class="egovframework.example.cmmn.EgovSampleOthersExcepHndlr" />	
 	

@@ -26,7 +26,7 @@
 
 	<!-- AOP 이용한 트랜잭션 적용 대상 지정 -->
 	<aop:config>
-		<aop:pointcut id="requiredTx" expression="execution(* egovframework.example.sample..impl.*Impl.*(..))"/>
+		<aop:pointcut id="requiredTx" expression="execution(* egovframework.example.sample.service.impl.*Impl.*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx" />
 	</aop:config>
 
