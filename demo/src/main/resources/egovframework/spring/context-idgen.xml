@@ -2,16 +2,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+	<!-- DB 테이블을 기반으로 한 ID 생성 서비스 -->
 	<bean name="egovIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+		<!-- DB 연결을 위한 DataSource 참조 -->
 		<property name="dataSource" ref="dataSource" />
+		<!-- ID 생성 전략 빈 참조 -->
 		<property name="strategy" 	ref="mixPrefixSample" />
+		<!-- 한번에 미리 생성해 둘 ID 개수(성능 최적화 목적) -->
 		<property name="blockSize" 	value="10"/>
+		<!-- ID를 관리하는 테이블명 -->
 		<property name="table"	   	value="IDS"/>
+		<!-- 이 ID 생성기가 관리하는 이름(테이블 내 키 역할) -->
 		<property name="tableName"	value="SAMPLE"/>
 	</bean>
+	<!-- ID 생성 전략(예: SAMPLE-00001) -->
 	<bean name="mixPrefixSample" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<!-- 생성 ID 앞에 붙는 접두사 -->
 		<property name="prefix"   value="SAMPLE-" />
+		<!-- 숫자 부분의 자릿수 -->
 		<property name="cipers"   value="5" />
+		<!-- 숫자가 부족할 때 채우는 문자 -->
 		<property name="fillChar" value="0" />
 	</bean>	
 			
