@@ -11,5 +11,7 @@ public interface UserMapper {
 	User findById(long id);
 	
 	void modify(User user);
+	
+	void delete(long id);
 
 }

@@ -1,6 +1,7 @@
 package egovframework.example.sample.controller.users;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,12 @@ public class UserRestController {
 	@PutMapping("/users/{id}")
 	public ResponseEntity<?> modify(@PathVariable long id, @RequestBody UpdateUserRequestDto request) {
 		userService.modify(id, request);
+		return ResponseEntity.ok(ResultResponseDto.builder().data(true).build());
+	}
+	
+	@DeleteMapping("/users/{id}")
+	public ResponseEntity<?> delete(@PathVariable long id) {
+		userService.delete(id);
 		return ResponseEntity.ok(ResultResponseDto.builder().data(true).build());
 	}
 

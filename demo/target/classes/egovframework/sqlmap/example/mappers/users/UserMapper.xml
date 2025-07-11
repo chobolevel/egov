@@ -45,6 +45,12 @@
     		, nickname = #{nickname}
     	</if>
     	WHERE id = #{id}
-    </update> 
+    </update>
+    
+    <update id="delete" parameterType="long">
+    	UPDATE users
+    	SET updated_at =  CURRENT_TIMESTAMP, is_deleted = true
+    	WHERE id = #{id}
+    </update>
 
 </mapper>
