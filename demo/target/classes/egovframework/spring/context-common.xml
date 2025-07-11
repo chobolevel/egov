@@ -59,5 +59,8 @@
 	<bean id="antPathMater" class="org.springframework.util.AntPathMatcher" />
 	<!-- 트레이스 핸들러 구현체 -->
 	<bean id="defaultTraceHandler" class="egovframework.rte.fdl.cmmn.trace.handler.DefaultTraceHandler" />
+	
+	<!-- import scheduler config -->
+	<import resource="classpath:/egovframework/spring/context-scheduler.xml" />
 	 
 </beans>
