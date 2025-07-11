@@ -4,10 +4,12 @@ import org.springframework.stereotype.Service;
 
 import egovframework.example.sample.converter.UserConverter;
 import egovframework.example.sample.dto.users.CreateUserRequestDto;
+import egovframework.example.sample.dto.users.UpdateUserRequestDto;
 import egovframework.example.sample.dto.users.UserResponseDto;
 import egovframework.example.sample.entity.User;
 import egovframework.example.sample.mapper.users.UserMapper;
 import egovframework.example.sample.service.users.UserService;
+import egovframework.example.sample.updater.users.UserUpdater;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -17,11 +19,13 @@ public class UserServiceImpl implements UserService {
 	private final UserMapper userMapper;
 	
 	private final UserConverter converter;
+	
+	private final UserUpdater updater;
 
 	@Override
 	public void save(CreateUserRequestDto request) {
 		User user = converter.convert(request);
-		userMapper.save(user);
+		userMapper.create(user);
 	}
 
 	@Override
@@ -29,6 +33,13 @@ public class UserServiceImpl implements UserService {
 		User user = userMapper.findById(id);
 		UserResponseDto response = converter.convert(user);
 		return response;
+	}
+
+	@Override
+	public void modify(long id, UpdateUserRequestDto request) {
+		User user = userMapper.findById(id);
+		User updatedUser = updater.markAsUpdate(request, user);
+		userMapper.modify(updatedUser);
 	}
 
 }

@@ -22,7 +22,7 @@
         , ${alias}updated_at as ${prefix}updated_at
     </sql>
     
-    <insert id="save" parameterType="User">
+    <insert id="create" parameterType="User">
     	INSERT INTO 
     	users(email, password, nickname, is_deleted, created_at, updated_at)
     	VALUES(#{email}, #{password}, #{nickname}, false, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP())
@@ -37,5 +37,14 @@
     	FROM users
     	WHERE id = #{id}
     </select>
+    
+    <update id="modify" parameterType="User">
+    	UPDATE users
+    	SET updated_at = CURRENT_TIMESTAMP
+    	<if test="nickname != null and nickname != ''">
+    		, nickname = #{nickname}
+    	</if>
+    	WHERE id = #{id}
+    </update> 
 
 </mapper>

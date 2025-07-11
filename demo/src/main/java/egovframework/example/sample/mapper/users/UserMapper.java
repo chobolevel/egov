@@ -6,8 +6,10 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 @Mapper("UserMapper")
 public interface UserMapper {
 
-	void save(User user);
+	void create(User user);
 	
 	User findById(long id);
+	
+	void modify(User user);
 
 }
