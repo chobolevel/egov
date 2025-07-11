@@ -16,7 +16,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</filter-mapping>
     
     <!-- 사용자 입력값에서 HTML 태그를 제거하거나 특수 문자를 이스케이프 처리해서 XSS 공격을 방지 -->
@@ -26,7 +26,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>HTMLTagFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</filter-mapping>
     
     <!-- Spring ApplicationContext를 웹 애플리케이션 시작 시점에 초기화 -->
@@ -53,7 +53,7 @@
     
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
     
     <!-- 첫 화면에 보일 파일 지정 -->

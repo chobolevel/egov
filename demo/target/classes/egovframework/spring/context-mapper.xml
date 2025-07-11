@@ -11,7 +11,7 @@
 		<property name="configLocation" value="classpath:/egovframework/sqlmap/example/sql-mapper-config.xml" />
 		
 		<!-- SQL 매퍼 xml 파일 위치(SQL 쿼리 정의된 XML 파일들 위치) -->
-		<property name="mapperLocations" value="classpath:/egovframework/sqlmap/example/mappers/*.xml" />
+		<property name="mapperLocations" value="classpath:/egovframework/sqlmap/example/mappers/**/*.xml" />
 	</bean>
 
 	

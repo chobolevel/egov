@@ -8,6 +8,7 @@
 	<!-- 단, @Controller 어노테이션이 붙은 클래스는 제외(dispatcher-servlet.xml에서 따로 스캔을 하므로 중복 방지 차원) -->
     <context:component-scan base-package="egovframework">
        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+       <context:exclude-filter type="annotation" expression="org.springframework.stereotype.RestController" />
     </context:component-scan>
 
 	<!-- 국제화 및 메세지 처리 설정 -->

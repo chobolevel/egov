@@ -1,4 +1,4 @@
-package egovframework.example.sample.mapper;
+package egovframework.example.sample.mapper.users;
 
 import egovframework.example.sample.entity.User;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -7,5 +7,7 @@ import egovframework.rte.psl.dataaccess.mapper.Mapper;
 public interface UserMapper {
 
 	void save(User user);
+	
+	User findById(long id);
 
 }

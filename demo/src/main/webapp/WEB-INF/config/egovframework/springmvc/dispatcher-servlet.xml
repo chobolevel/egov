@@ -11,9 +11,16 @@
 	<!-- MVC 컨트롤러만 별도로 관리하기 위한 스캔 분리 -->
     <context:component-scan base-package="egovframework">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.RestController" />
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
+    
+    <mvc:annotation-driven>
+	    <mvc:message-converters register-defaults="true">
+	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+	    </mvc:message-converters>
+	</mvc:annotation-driven>
 
 	<!-- @RequestMaping 기반 컨트롤러 메서드를 호출하는 역할 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

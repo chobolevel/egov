@@ -6,6 +6,6 @@
 	<!-- MyBatis에서 parameterType, resultType에서 사용 가능 -->
 	<!-- 별칭만 적고 경로를 적지 않아도 되기 때문에 가독성 향상에 도움 -->
     <typeAliases>
-    	 <typeAlias  alias="user" type="egovframework.example.sample.entity.User"/>
+    	 <typeAlias alias="user" type="egovframework.example.sample.entity.User"/>
     </typeAliases>
 </configuration>

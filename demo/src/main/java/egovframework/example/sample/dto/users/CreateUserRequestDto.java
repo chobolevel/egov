@@ -1,5 +1,5 @@
 
-package egovframework.example.sample.dto;
+package egovframework.example.sample.dto.users;
 
 import lombok.Getter;
 import lombok.Setter;
