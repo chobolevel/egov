@@ -45,6 +45,15 @@
     		<property name="prefix" value="" />
     	</include>
     	FROM users
+    	<if test="sortBy != null and sortBy != ''">
+    		ORDER BY #{sortBy}
+    		<if test="sortDir != null and sortDir == 'desc'">
+    			DESC
+    		</if>
+    		<if test="sortDir != null and sortDir == 'asc'">
+    			ASC
+   			</if>
+    	</if>
     	LIMIT #{size} OFFSET #{page}
     </select>
     

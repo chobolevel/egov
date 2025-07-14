@@ -41,10 +41,14 @@ public class UserRestController {
 	@GetMapping("/users")
 	public ResponseEntity<?> getUsers(
 			@RequestParam(required = false, defaultValue = "1") long page,
-			@RequestParam(required = false, defaultValue = "10") long size) {
+			@RequestParam(required = false, defaultValue = "10") long size,
+			@RequestParam(required = false) String sortBy,
+			@RequestParam(required = false) String sortDir) {
 		GetUsersRequestDto request = new GetUsersRequestDto();
 		request.setPage(page);
 		request.setSize(size);
+		request.setSortBy(sortBy);
+		request.setSortDir(sortDir);
 		List<UserResponseDto> userResponses = userService.search(request);
 		return ResponseEntity.ok(ResultResponseDto.builder().data(userResponses).build());
 	}

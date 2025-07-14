@@ -41,6 +41,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserResponseDto> search(GetUsersRequestDto request) {
 		List<User> users = userMapper.search(request);
+		for(User user : users) {
+			System.out.println(user.getId());
+		}
 		return converter.convert(users);
 	}
 
