@@ -1,9 +1,12 @@
 package egovframework.example.sample.service.users.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import egovframework.example.sample.converter.UserConverter;
 import egovframework.example.sample.dto.users.CreateUserRequestDto;
+import egovframework.example.sample.dto.users.GetUsersRequestDto;
 import egovframework.example.sample.dto.users.UpdateUserRequestDto;
 import egovframework.example.sample.dto.users.UserResponseDto;
 import egovframework.example.sample.entity.User;
@@ -33,6 +36,12 @@ public class UserServiceImpl implements UserService {
 		User user = userMapper.findById(id);
 		UserResponseDto response = converter.convert(user);
 		return response;
+	}
+	
+	@Override
+	public List<UserResponseDto> search(GetUsersRequestDto request) {
+		List<User> users = userMapper.search(request);
+		return converter.convert(users);
 	}
 
 	@Override

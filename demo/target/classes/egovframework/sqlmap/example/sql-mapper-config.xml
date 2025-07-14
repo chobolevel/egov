@@ -7,5 +7,6 @@
 	<!-- 별칭만 적고 경로를 적지 않아도 되기 때문에 가독성 향상에 도움 -->
     <typeAliases>
     	 <typeAlias alias="user" type="egovframework.example.sample.entity.User"/>
+    	 <typeAlias alias="getUsersRequest" type="egovframework.example.sample.dto.users.GetUsersRequestDto" />
     </typeAliases>
 </configuration>

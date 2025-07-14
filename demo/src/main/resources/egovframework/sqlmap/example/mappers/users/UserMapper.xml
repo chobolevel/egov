@@ -38,6 +38,16 @@
     	WHERE id = #{id}
     </select>
     
+    <select id="search" resultMap="BaseResultMap" parameterType="GetUsersRequest">
+    	SELECT
+    	<include refid="columns">
+    		<property name="alias" value=""/>
+    		<property name="prefix" value="" />
+    	</include>
+    	FROM users
+    	LIMIT #{size} OFFSET #{page}
+    </select>
+    
     <update id="modify" parameterType="User">
     	UPDATE users
     	SET updated_at = CURRENT_TIMESTAMP
