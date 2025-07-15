@@ -2,6 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.user.UserMapper">
 
+	<resultMap id="BaseResultMap" type="User">
+		<id column="id" property="id" />
+		<result column="email" property="email" />
+		<result column="password" property="password" />
+		<result column="nickname" property="nickname" />
+		<result column="is_deleted" property="isDeleted" />
+		<result column="created_at" property="createdAt" />
+		<result column="updated_at" property="updatedAt" />
+	</resultMap>
+	
+	<sql id="columns">
+		${alias}id as ${prefix}id,
+		${alias}email as ${prefix}email,
+		${alias}password as ${prefix}password,
+		${alias}nickname as ${prefix}nickname,
+		${alias}is_deleted as ${prefix}is_deleted,
+		${alias}created_at as ${prefix}created_at,
+		${alias}updated_at as ${prefix}updated_at
+	</sql>
+
 	<insert id="create" parameterType="User">
 		INSERT INTO
 		users (email, password, nickname, is_deleted, created_at, updated_at)
@@ -11,6 +31,45 @@
 	<select id="existsByEmail" parameterType="String" resultType="boolean">
 		SELECT EXISTS
 		(SELECT 1 FROM users WHERE email = #{email})
+	</select>
+	
+	<select id="getUsers" parameterType="getUsersRequest" resultMap="BaseResultMap">
+		SELECT
+		<include refid="columns">
+			<property name="alias"  value="u." />
+			<property name="prefix" value="" />
+		</include>
+		FROM users as u
+		<where>
+			<if test="nickname != null and nickname != ''">
+				AND u.nickname LIKE CONCAT('%', #{nickname}, '%')
+			</if>
+		</where>
+		<if test="sortBy!= null and sortBy != ''">
+			ORDER BY ${sortBy} ${sortDir}
+		</if>
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+	
+	<select id="getUser" parameterType="long" resultMap="BaseResultMap">
+		SELECt
+		<include refid="columns">
+			<property name="alias" value="u." />
+			<property name="prefix" value="" />
+		</include>
+		FROM users as u
+		WHERE u.id = #{id}
+	</select>
+	
+	<select id="getCount" parameterType="getUsersRequest" resultType="long">
+		SELECT 
+		COUNT(*)
+	 	FROM users
+	 	<where>
+			<if test="nickname != null and nickname != ''">
+				AND u.nickname LIKE CONCAT('%', #{nickname}, '%')
+			</if>
+		</where>
 	</select>
 
 </mapper>

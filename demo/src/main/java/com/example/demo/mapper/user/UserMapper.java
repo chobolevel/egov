@@ -1,5 +1,8 @@
 package com.example.demo.mapper.user;
 
+import java.util.List;
+
+import com.example.demo.dto.user.GetUsersRequestDto;
 import com.example.demo.entity.user.User;
 
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
@@ -10,4 +13,10 @@ public interface UserMapper {
 	public void create(User user);
 	
 	public boolean existsByEmail(String email);
+	
+	public List<User> getUsers(GetUsersRequestDto request);
+	
+	public User getUser(long id);
+	
+	public long getCount(GetUsersRequestDto request);
 }
