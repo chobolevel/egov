@@ -60,9 +60,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void modify(long id, UpdateUserRequestDto request) {
 		User foundUser = userMapper.getUser(id);
-//		User userForModify = userUpdater.markAsUpdate(request, foundUser);
-		foundUser.setNickname(request.getNickname());
-		userMapper.modify(foundUser);
+		User userForModify = userUpdater.markAsUpdate(request, foundUser);
+		userMapper.modify(userForModify);
 	}
 
 }
