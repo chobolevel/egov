@@ -44,6 +44,7 @@
 			<if test="nickname != null and nickname != ''">
 				AND u.nickname LIKE CONCAT('%', #{nickname}, '%')
 			</if>
+			AND u.is_deleted = false
 		</where>
 		<if test="sortBy!= null and sortBy != ''">
 			ORDER BY ${sortBy} ${sortDir}
@@ -58,7 +59,7 @@
 			<property name="prefix" value="" />
 		</include>
 		FROM users as u
-		WHERE u.id = #{id}
+		WHERE u.id = #{id} AND u.is_deleted = false
 	</select>
 	
 	<select id="getCount" parameterType="getUsersRequest" resultType="long">
@@ -69,7 +70,19 @@
 			<if test="nickname != null and nickname != ''">
 				AND u.nickname LIKE CONCAT('%', #{nickname}, '%')
 			</if>
+			AND u.is_deleted = false
 		</where>
 	</select>
+	
+	<update id="modify" parameterType="user">
+		UPDATE users
+		<set>
+			<if test="nickname != null and nickname != ''">
+				nickname = #{nickname},
+			</if>
+			updated_at = CURRENT_TIMESTAMP()
+		</set>
+		WHERE id = #{id}
+	</update> 
 
 </mapper>

@@ -6,14 +6,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.constants.user.UserUpdateMask;
 import com.example.demo.dto.common.PagingResponseDto;
 import com.example.demo.dto.common.SuccessResponseDto;
 import com.example.demo.dto.user.CreateUserRequestDto;
 import com.example.demo.dto.user.GetUsersRequestDto;
+import com.example.demo.dto.user.UpdateUserRequestDto;
 import com.example.demo.dto.user.UserResponseDto;
 import com.example.demo.service.user.UserService;
 
@@ -54,6 +57,12 @@ public class UserRestController {
 	public ResponseEntity<?> getUser(@PathVariable long id) {
 		UserResponseDto result = userService.getUser(id);
 		return ResponseEntity.ok(SuccessResponseDto.builder().data(result).build());
+	}
+	
+	@PutMapping("/users/{id}")
+	public ResponseEntity<?> modify(@PathVariable long id, @Valid @RequestBody UpdateUserRequestDto request) {
+		userService.modify(id, request);
+		return ResponseEntity.ok(SuccessResponseDto.builder().data(true).build());
 	}
 	
 }

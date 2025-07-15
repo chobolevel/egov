@@ -18,5 +18,7 @@ public interface UserMapper {
 	
 	public User getUser(long id);
 	
+	public void modify(User user);
+	
 	public long getCount(GetUsersRequestDto request);
 }

@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.common.PagingResponseDto;
 import com.example.demo.dto.user.CreateUserRequestDto;
 import com.example.demo.dto.user.GetUsersRequestDto;
+import com.example.demo.dto.user.UpdateUserRequestDto;
 import com.example.demo.dto.user.UserResponseDto;
 import com.example.demo.entity.user.User;
 import com.example.demo.exception.DataNotFoundException;
 import com.example.demo.mapper.user.UserMapper;
 import com.example.demo.service.user.UserService;
 import com.example.demo.service.user.converter.UserConverter;
+import com.example.demo.service.user.updater.UserUpdater;
 import com.example.demo.service.user.validator.UserValidator;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,8 @@ public class UserServiceImpl implements UserService {
 	private final UserConverter userConverter;
 
 	private final UserValidator userValidator;
+	
+	private final UserUpdater userUpdater;
 
 	@Override
 	public void create(CreateUserRequestDto request) {
@@ -51,6 +55,14 @@ public class UserServiceImpl implements UserService {
 			throw new DataNotFoundException("회원을 찾을 수 없습니다.");
 		}
 		return userConverter.convert(user);
+	}
+
+	@Override
+	public void modify(long id, UpdateUserRequestDto request) {
+		User foundUser = userMapper.getUser(id);
+//		User userForModify = userUpdater.markAsUpdate(request, foundUser);
+		foundUser.setNickname(request.getNickname());
+		userMapper.modify(foundUser);
 	}
 
 }
