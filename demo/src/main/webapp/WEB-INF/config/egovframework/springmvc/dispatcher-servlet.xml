@@ -7,15 +7,22 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
-    <context:component-scan base-package="egovframework">
+    <context:component-scan base-package="com.example.demo">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.RestController" />
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
+    
+    <mvc:annotation-driven>
+	    <mvc:message-converters register-defaults="true">
+	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+	    </mvc:message-converters>
+	</mvc:annotation-driven>
 
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="webBindingInitializer">
-            <bean class="egovframework.example.cmmn.web.EgovBindingInitializer"/>
+            <bean class="com.example.demo.config.EgovBindingInitializer"/>
         </property>
     </bean>
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
@@ -49,7 +56,7 @@
 	    p:prefix="/WEB-INF/jsp/egovframework/example/" p:suffix=".jsp"/>
 
     <!-- For Pagination Tag -->
-    <bean id="imageRenderer" class="egovframework.example.cmmn.web.EgovImgPaginationRenderer"/>
+    <bean id="imageRenderer" class="com.example.demo.config.EgovImgPaginationRenderer"/>
 
     <bean id="paginationManager" class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
         <property name="rendererType">
@@ -61,4 +68,5 @@
 	<!-- /For Pagination Tag -->
 
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
+
 </beans>

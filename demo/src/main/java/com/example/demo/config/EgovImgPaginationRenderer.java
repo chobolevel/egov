@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package egovframework.example.cmmn.web;
+package com.example.demo.config;
 
 import egovframework.rte.ptl.mvc.tags.ui.pagination.AbstractPaginationRenderer;
 

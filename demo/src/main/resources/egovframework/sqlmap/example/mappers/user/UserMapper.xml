@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.user.UserMapper">
+
+	<insert id="create" parameterType="User">
+		INSERT INTO
+		users (email, password, nickname, is_deleted, created_at, updated_at)
+		VALUES (#{email}, #{password}, #{nickname}, #{isDeleted}, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP())
+	</insert>
+	
+	<select id="existsByEmail" parameterType="String" resultType="boolean">
+		SELECT EXISTS
+		(SELECT 1 FROM users WHERE email = #{email})
+	</select>
+
+</mapper>
