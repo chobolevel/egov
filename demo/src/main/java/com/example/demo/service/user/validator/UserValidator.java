@@ -15,8 +15,7 @@ public class UserValidator {
 	private final UserMapper userMapper;
 
 	public void validate(CreateUserRequestDto request) {
-		boolean isSameEmailUserExists = userMapper.existsByEmail(request.getEmail());
-		if(isSameEmailUserExists) {
+		if(userMapper.existsByEmail(request.getEmail())) {
 			throw new PolicyException("이미 존재하는 이메일입니다.");
 		}
 	}

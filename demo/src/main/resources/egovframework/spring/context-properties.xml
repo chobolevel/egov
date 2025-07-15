@@ -2,6 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+	<!-- egovframework에서 제공하는 프로퍼티 관리 서비스 구현체 -->
+	<!-- 전역 설정 값을 Map 형태로 보관 -->
+	<!-- 코드에서 propertiesService.getString("key"); 형태로 사용 -->
 	<bean name="propertiesService" class="egovframework.rte.fdl.property.impl.EgovPropertyServiceImpl" destroy-method="destroy">
 		<property name="properties">
 	        <map>

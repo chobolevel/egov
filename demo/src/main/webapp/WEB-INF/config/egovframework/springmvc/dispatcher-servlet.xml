@@ -14,18 +14,23 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
     
+    <!-- JSON 매핑을 위한 Jackson 설정 -->
     <mvc:annotation-driven>
 	    <mvc:message-converters register-defaults="true">
 	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
 	    </mvc:message-converters>
 	</mvc:annotation-driven>
 
+	<!-- @RequestMapping 기반 컨트롤러 메서드를 호출하는 역할 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="webBindingInitializer">
             <bean class="com.example.demo.config.EgovBindingInitializer"/>
         </property>
     </bean>
+    
+    <!-- URL과 컨트롤러 메서드 매핑 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+    	<!-- 인터셉터 등록 -->
         <property name="interceptors">
             <list>
                 <ref bean="localeChangeInterceptor" />
@@ -33,12 +38,17 @@
         </property>
     </bean>
     
+    <!--  사용자의 세션을 통해 locale(언어/지역) 관리 -->
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+    
     <!-- 쿠키를 이용한 Locale 이용시 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/> -->
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="language" />
     </bean>
-
+    
+	<!-- 특정 예외 클래스 별로 보여줄 JSP 뷰 지정 -->
+	<!-- 예외 발생 시 자동으로 해당 뷰로 포워딩 -->
+	<!-- default = cmmn/egovError -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="cmmn/egovError"/>
         <property name="exceptionMappings">
@@ -51,6 +61,8 @@
         </property>
     </bean>
 
+	<!-- JSP 뷰 경로 지정(예: return "sample/list" -> /WEB-INF/jsp/egovframework/example/sample.list.jsp) -->
+	<!-- JSTL 뷰 클래스를 사용해 JSTL 태그 지원 -->
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
 	    p:viewClass="org.springframework.web.servlet.view.JstlView"
 	    p:prefix="/WEB-INF/jsp/egovframework/example/" p:suffix=".jsp"/>
@@ -67,6 +79,8 @@
     </bean>
 	<!-- /For Pagination Tag -->
 
+	<!-- 단순 뷰 컨트롤러 매핑 -->
+	<!-- 즉, 컨트롤러 없이 path로 요청 시 해당 뷰를 보여줌 -->
     <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
 
 </beans>

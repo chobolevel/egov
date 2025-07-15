@@ -41,8 +41,20 @@
 
 <form-validation>
 
+   <!-- 전역 룰 정의 -->
+   <!-- 여러 검증 룰들을 정의하는 <validator> 태그들의 컨테이너 -->
    <global>
 
+      <!-- 검증 룰 하나를 정의하는 요소 -->
+	  <!-- 필수 입력 값 검증을 처리하기 위한 정의 -->
+	  <!-- 이름이 required인 검증기를 정의 -->
+	  <!-- 서버 사이드에서는 Java 메서드 FieldChecks.validateRequired()로 동작 -->
+	  <!-- 클라이언트 사이드에서는 자바스크립트 함수 validateRequired()로 동작 -->
+	  <!-- name = 이 검증기를 참조할 떄 사용하는 이름 -->
+	  <!-- classname = 실제 검증을 수행하는 Java클래스 -->
+	  <!-- method = 실행할 메서드 -->
+	  <!-- methodParams = 해당 메서드가 받는 파라미터들의 클래스 타입 -->
+	  <!-- 검증 실패 시 출력할 메시지 키로 메시지 프로퍼티 파일에 정의된 값을 사용 -->
       <validator name="required"
             classname="org.springmodules.validation.commons.FieldChecks"
                method="validateRequired"

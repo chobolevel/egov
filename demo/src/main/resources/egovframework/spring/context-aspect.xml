@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
+	<!-- 해당 point-cut에서 예외 발생 시 exceptionTransfer 클래스의 transfer 메서드를 실행하는 설정-->
 	<aop:config>
 		<aop:pointcut id="serviceMethod" expression="execution(* com.example.demo.service..impl.*Impl.*(..))" />
 
@@ -12,6 +13,8 @@
 		</aop:aspect>
 	</aop:config>
 	
+	<!-- exceptionTransfer 클래스 빈 등록 -->
+	<!-- 예외를 받아 예외 처리 매니저에게 위임하는 빈 -->
 	<bean id="exceptionTransfer" class="egovframework.rte.fdl.cmmn.aspect.ExceptionTransfer">
 		<property name="exceptionHandlerService">
 			<list>
@@ -21,6 +24,7 @@
 		</property>
 	</bean>
 
+	<!-- exceptionTransfer에게 위임받은 예외 중 패턴과 일치하는 예외 처리하는 빈 -->
 	<bean id="defaultExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
@@ -37,6 +41,7 @@
 		</property>
 	</bean>
 
+	<!-- exceptionTransfer에게 위임받은 예외 중 패턴과 일치하는 예외 처리하는 빈 -->
 	<bean id="otherExceptionHandleManager" class="egovframework.rte.fdl.cmmn.exception.manager.DefaultExceptionHandleManager">
 		<property name="reqExpMatcher">
 			<ref bean="antPathMater"/>
