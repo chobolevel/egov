@@ -21,4 +21,6 @@ public interface UserMapper {
 	public void modify(User user);
 	
 	public long getCount(GetUsersRequestDto request);
+	
+	public void remove(long id);
 }

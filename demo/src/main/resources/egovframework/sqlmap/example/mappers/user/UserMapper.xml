@@ -83,6 +83,15 @@
 			updated_at = CURRENT_TIMESTAMP()
 		</set>
 		WHERE id = #{id}
-	</update> 
+	</update>
+	
+	<update id="remove" parameterType="long">
+		UPDATE users
+		<set>
+			is_deleted = true,
+			updated_at = CURRENT_TIMESTAMP()
+		</set>
+		WHERE id = #{id}
+	</update>
 
 </mapper>
