@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
 		userMapper.modify(userForModify);
 	}
 
+	@Override
+	public void remove(long id) {
+		userMapper.remove(id);
+	}
+
 }

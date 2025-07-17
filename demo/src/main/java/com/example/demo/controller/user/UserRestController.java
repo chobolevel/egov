@@ -3,6 +3,7 @@ package com.example.demo.controller.user;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.constants.user.UserUpdateMask;
 import com.example.demo.dto.common.PagingResponseDto;
 import com.example.demo.dto.common.SuccessResponseDto;
 import com.example.demo.dto.user.CreateUserRequestDto;
@@ -62,6 +62,12 @@ public class UserRestController {
 	@PutMapping("/users/{id}")
 	public ResponseEntity<?> modify(@PathVariable long id, @Valid @RequestBody UpdateUserRequestDto request) {
 		userService.modify(id, request);
+		return ResponseEntity.ok(SuccessResponseDto.builder().data(true).build());
+	}
+	
+	@DeleteMapping("/users/{id}")
+	public ResponseEntity<?> remove(@PathVariable long id) {
+		userService.remove(id);
 		return ResponseEntity.ok(SuccessResponseDto.builder().data(true).build());
 	}
 	
