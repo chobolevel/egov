@@ -65,7 +65,7 @@
 	<select id="getCount" parameterType="getUsersRequest" resultType="long">
 		SELECT 
 		COUNT(*)
-	 	FROM users
+	 	FROM users as u
 	 	<where>
 			<if test="nickname != null and nickname != ''">
 				AND u.nickname LIKE CONCAT('%', #{nickname}, '%')
